@@ -17,7 +17,7 @@ class UsersController extends Controller
             'password'=>bcrypt($request->get('password'))
         ];
 
-        User::create($data);
+        User::register($data);
 
         return redirect('success');
     }

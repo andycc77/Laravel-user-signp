@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\UserRegister;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -23,4 +24,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function register(array $attributes)
+    {
+        $user = static::create($attributes);
+
+        //events
+        event(new UserRegister($user));
+
+        return $user;
+    }
 }
