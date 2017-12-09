@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\UserRegister;
+use App\Mailer\UserMailer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -14,7 +15,7 @@ class SendWelcomeEmail
      *
      * @return void
      */
-    public function __construct(\Mail $mailer)
+    public function __construct(UserMailer $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -27,6 +28,6 @@ class SendWelcomeEmail
      */
     public function handle(UserRegister $event)
     {
-        $this->mailer->queue();
+        $this->mailer->welcome($event->user);
     }
 }
